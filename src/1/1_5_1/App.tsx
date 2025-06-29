@@ -5,59 +5,54 @@
 
 import { getImageUrl } from "./util";
 
+function Profile({ name, imageId, profession, awards, discovered }) {
+  return (
+    <section className="profile">
+      <h2>{name}</h2>
+      <img
+        className="avatar"
+        src={getImageUrl(imageId)}
+        alt={name}
+        width={70}
+        height={70}
+      />
+      <ul>
+        <li>
+          <b>Profession: </b> {profession}
+        </li>
+        <li>
+          <b>Awards: </b> {awards}
+        </li>
+        <li>
+          <b>Discovered: </b> {discovered}
+        </li>
+      </ul>
+    </section>
+  );
+}
 
 export default function Gallery() {
   return (
     <div>
       <h1>Notable Scientists</h1>
-      <section className="profile">
-        <h2>Maria Skłodowska-Curie</h2>
-        <img
-          className="avatar"
-          src={getImageUrl('Maria')}
-          alt="Maria Skłodowska-Curie"
-          width={70}
-          height={70}
-        />
-        <ul>
-          <li>
-            <b>Profession: </b> 
-            physicist and chemist
-          </li>
-          <li>
-            <b>Awards: 4 </b> 
-            (Nobel Prize in Physics, Nobel Prize in Chemistry, Davy Medal, Matteucci Medal)
-          </li>
-          <li>
-            <b>Discovered: </b>
-            polonium (chemical element)
-          </li>
-        </ul>
-      </section>
-      <section className="profile">
-        <h2>Katsuko Saruhashi</h2>
-        <img
-          className="avatar"
-          src={getImageUrl('KatsukoSaruhashi')}
-          alt="Katsuko Saruhashi"
-          width={70}
-          height={70}
-        />
-        <ul>
-          <li>
-            <b>Profession: </b> 
-            geochemist
-          </li>
-          <li>
-            <b>Awards: 2 </b> 
-            (Miyake Prize for geochemistry, Tanaka Prize)
-          </li>
-          <li>
-            <b>Discovered: </b>
-            a method for measuring carbon dioxide in seawater
-          </li>
-        </ul>
-      </section>
+
+      {/* Первый профиль */}
+      <Profile
+        name="Maria Skłodowska-Curie"
+        imageId="Maria"
+        profession="physicist and chemist"
+        awards="4 (Nobel Prize in Physics, Nobel Prize in Chemistry, Davy Medal, Matteucci Medal)"
+        discovered="polonium (chemical element)"
+      />
+
+      {/* Второй профиль */}
+      <Profile
+        name="Katsuko Saruhashi"
+        imageId="KatsukoSaruhashi"
+        profession="geochemist"
+        awards="2 (Miyake Prize for geochemistry, Tanaka Prize)"
+        discovered="a method for measuring carbon dioxide in seawater"
+      />
     </div>
   );
 }

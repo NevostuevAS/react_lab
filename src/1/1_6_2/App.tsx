@@ -13,6 +13,8 @@ function Item({ name, importance }: { name: string, importance: number }) {
   return (
     <li className="item">
       {name}
+      {" "}
+      {importance && <em>{`(Важность: ${importance})`}</em>}
     </li>
   );
 }

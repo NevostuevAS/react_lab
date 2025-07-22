@@ -17,6 +17,48 @@ export type Person = {
 }
 
 export default function List() {
+    const astrophysicist = people.filter(person => person.profession === 'astrophysicist');
+    const astrophysicistItems = astrophysicist.map((person) => (
+        <li key={person.id}>
+            <img
+                src={getImageUrl(person)}
+                alt={person.name}
+            />
+            <p>
+                <b>{person.name}:</b>
+                {' ' + person.profession + ' '}
+                known for {person.accomplishment}
+            </p>
+        </li>
+    ));
+    const physicist = people.filter(person => person.profession === 'physicist');
+    const physicistItems = physicist.map((person) => (
+        <li key={person.id}>
+            <img
+                src={getImageUrl(person)}
+                alt={person.name}
+            />
+            <p>
+                <b>{person.name}:</b>
+                {' ' + person.profession + ' '}
+                known for {person.accomplishment}
+            </p>
+        </li>
+    ));
+    const chemists = people.filter(person => person.profession === 'chemist');
+    const chemistItems = chemists.map((person) => (
+        <li key={person.id}>
+            <img
+                src={getImageUrl(person)}
+                alt={person.name}
+            />
+            <p>
+                <b>{person.name}:</b>
+                {' ' + person.profession + ' '}
+                known for {person.accomplishment}
+            </p>
+        </li>
+    ));
     const listItems = people.map((person) => (
         <li key={person.id}>
             <img
@@ -32,8 +74,21 @@ export default function List() {
     ));
     return (
         <article>
-            <h1>Scientists</h1>
-            <ul>{listItems}</ul>
+            <body>
+            <h1 className="scientists">Scientists</h1>
+            <div className = "chemists">
+            <h2>Chemist:</h2>
+            <ul>{chemistItems}</ul>
+            </div>
+            <div className = "physicists">
+            <h2>physicist:</h2>
+            <ul>{physicistItems}</ul>
+            </div>
+            <div className= "astrophysicists">
+            <h2>Astrophysicist:</h2>
+            <ul>{astrophysicistItems}</ul>
+            </div>
+            </body>
         </article>
     );
 }

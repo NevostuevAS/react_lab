@@ -7,13 +7,13 @@
 
 import { useState } from "react";
 
-function ColorSwitch({
-  onChangeColor
-}: {
-  onChangeColor: () => void
-}) {
+function ColorSwitch({onChangeColor}: {onChangeColor: () => void}) {
   return (
-    <button>
+    <button onClick={(e)  => {
+      e.stopPropagation();
+        onChangeColor();
+    }}
+    >
       Change color
     </button>
   );
@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     <div style={{ width: '100%', height: '100%' }} onClick={handleClickOutside}>
-      <ColorSwitch onChangeColor={handleChangeColor} />
+      <ColorSwitch onChangeColor={handleChangeColor}/>
       <br />
       <br />
       <h2>Clicks on the page: {clicks}</h2>

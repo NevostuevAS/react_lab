@@ -13,13 +13,15 @@ export default function ClockWrapper() {
 
 function Clock({ time }: { time: Date }) {
   const hours = time.getHours();
-  const elem = document.getElementById("time");
-  if (elem)
-    if (hours >= 0 && hours <= 6) {
-      elem.className = "night";
-    } else {
-      elem.className = "day";
-    }
-  return <h1 id="time">{time.toLocaleTimeString()}</h1>;
+ 
+  const className = hours >= 0 && hours <= 6 ? "night" : "day";
+  return (
+    <div>
+    <p>{className}</p>
+    <h1 id="time" className={className}>
+      {time.toLocaleTimeString()}
+    </h1>
+    </div>
+  )
 }
 

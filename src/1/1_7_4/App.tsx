@@ -14,7 +14,7 @@
 
   Это редкий случай, когда индекс в качестве ключа допустим, потому что строки стихотворения никогда не будут перестраиваться.
 */
-
+import React from 'react';
 const poem = {
   lines: [
       'I write, erase, rewrite',
@@ -24,10 +24,14 @@ const poem = {
 };
 
 export default function Poem() {
+  const lines = poem.lines;
   return (
       <article>
-          {poem.lines.map((line, index) => (
-              <p key={index}>{line}</p>
+          {lines.map((line, index) => (
+              <React.Fragment key={index}>
+                <p>{line}</p>
+                {index !== lines.length - 1 && <hr />}
+              </React.Fragment>
           ))}
       </article>
   );

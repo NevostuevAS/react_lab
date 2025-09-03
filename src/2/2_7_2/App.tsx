@@ -42,20 +42,31 @@ export default function ShoppingCart() {
             })
         );
     }
+        function handleDecreaseClick(productId: number) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        if (product.count === 1) {
+            // Удаляем товар
+            setProducts(products.filter(p => p.id !== productId));
+        } else {
+            // Уменьшаем count
+            setProducts(products.map(p => {
+                if (p.id === productId) {
+                    return { ...p, count: p.count - 1 };
+                }
+                return p;
+            }));
+        }
+    }
 
     return (
         <ul>
             {products.map((product) => (
                 <li key={product.id}>
                     {product.name} (<b>{product.count}</b>)
-                    <button
-                        onClick={() => {
-                            handleIncreaseClick(product.id);
-                        }}
-                    >
-                        +
-                    </button>
-                    <button>–</button>
+                    <button onClick={() => { handleIncreaseClick(product.id);}}>+</button>
+                <button onClick={() => {handleDecreaseClick(product.id);}}>–</button>
                 </li>
             ))}
         </ul>

@@ -10,21 +10,53 @@
 */
 
 
+import { useState } from 'react';
+
 export default function EditProfile() {
-    return (
-        <form>
-            <label>
-                First name: <b>Jane</b>
-                <input />
-            </label>
-            <label>
-                Last name: <b>Jacobs</b>
-                <input />
-            </label>
-            <button type="submit">Edit Profile</button>
-            <p>
-                <i>Hello, Jane Jacobs!</i>
-            </p>
-        </form>
-    );
+  // Состояния для имени, фамилии и режима редактирования
+  const [firstName, setFirstName] = useState('Jane');
+  const [lastName, setLastName] = useState('Jacobs');
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Обработчик сабмита формы — переключает режим и предотвращает перезагрузку страницы
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsEditing(!isEditing);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        First name:{' '}
+        {isEditing ? (
+          <input
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            autoFocus
+          />
+        ) : (
+          <b>{firstName}</b>
+        )}
+      </label>
+      <br />
+      <label>
+        Last name:{' '}
+        {isEditing ? (
+          <input
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        ) : (
+          <b>{lastName}</b>
+        )}
+      </label>
+      <br />
+      <button type="submit">{isEditing ? 'Save' : 'Edit Profile'}</button>
+      <p>
+        <i>
+          Hello, {firstName} {lastName}!
+        </i>
+      </p>
+    </form>
+  );
 }

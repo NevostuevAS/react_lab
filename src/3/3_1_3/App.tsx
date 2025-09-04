@@ -8,8 +8,60 @@
 */
 
 
+import React, { useState } from 'react';
+
 export default function EditProfile() {
-    return (
-        <div></div>
-    );
+  const [state, setState] = useState({
+    firstName: 'Jane',
+    lastName: 'Jacobs',
+    isEditing: false,
+  });
+
+  function toggleEdit() {
+    setState(prev => ({ ...prev, isEditing: !prev.isEditing }));
+  }
+
+  function updateField(field, value) {
+    setState(prev => ({ ...prev, [field]: value }));
+  }
+
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        toggleEdit();
+      }}
+    >
+      <label>
+        First name:{' '}
+        {state.isEditing ? (
+          <input
+            value={state.firstName}
+            onChange={e => updateField('firstName', e.target.value)}
+          />
+        ) : (
+          <b>{state.firstName}</b>
+        )}
+      </label>
+      <br />
+      <label>
+        Last name:{' '}
+        {state.isEditing ? (
+          <input
+            value={state.lastName}
+            onChange={e => updateField('lastName', e.target.value)}
+          />
+        ) : (
+          <b>{state.lastName}</b>
+        )}
+      </label>
+      <br />
+      <button type="submit">{state.isEditing ? 'Save' : 'Edit Profile'}</button>
+      <p>
+        <i>
+          Hello, {state.firstName} {state.lastName}!
+        </i>
+      </p>
+    </form>
+  );
 }

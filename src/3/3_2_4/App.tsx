@@ -11,17 +11,24 @@ import { letters } from './data.js';
 import Letter from './Letter.js';
 
 export default function MailClient() {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-
-  // TODO: allow multiple selection
-  const selectedCount = 1;
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+const selectedCount = selectedIds.size;
 
   function handleToggle(toggledId: number) {
-    // TODO: allow multiple selection
-    setSelectedId(toggledId);
+    setSelectedIds(prevSelectedIds => {
+      const newSelectedIds = new Set(prevSelectedIds);
+
+      if (newSelectedIds.has(toggledId)) {
+        newSelectedIds.delete(toggledId);
+      } else {
+        newSelectedIds.add(toggledId);
+      }
+
+      return newSelectedIds;
+    });
   }
 
-  return (
+return (
     <>
       <h2>Inbox</h2>
       <ul>
@@ -29,17 +36,15 @@ export default function MailClient() {
           <Letter
             key={letter.id}
             letter={letter}
-            isSelected={
-              // TODO: allow multiple selection
-              letter.id === selectedId
-            }
+            // Проверяем, есть ли id письма в множестве выбранных
+            isSelected={selectedIds.has(letter.id)}
             onToggle={handleToggle}
           />
         ))}
         <hr />
         <p>
           <b>
-            You selected {selectedCount} letters
+            You selected {selectedCount} {selectedCount === 1 ? 'letter' : 'letters'}
           </b>
         </p>
       </ul>

@@ -9,6 +9,9 @@ import { useState } from 'react';
 
 export default function App() {
   const [reverse, setReverse] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   let checkbox = (
     <label>
       <input
@@ -19,35 +22,35 @@ export default function App() {
       Reverse order
     </label>
   );
+
   if (reverse) {
     return (
       <>
-        <Field label="Last name" /> 
-        <Field label="First name" />
+        <Field label="Last name" value={lastName} onChange={e => setLastName(e.target.value)} />
+        <Field label="First name" value={firstName} onChange={e => setFirstName(e.target.value)} />
         {checkbox}
       </>
     );
   } else {
     return (
       <>
-        <Field label="First name" /> 
-        <Field label="Last name" />
+        <Field label="First name" value={firstName} onChange={e => setFirstName(e.target.value)} />
+        <Field label="Last name" value={lastName} onChange={e => setLastName(e.target.value)} />
         {checkbox}
       </>
-    );    
+    );
   }
 }
 
-function Field({ label }: { label: string }) {
-  const [text, setText] = useState('');
+function Field({ label, value, onChange }: { label: string; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <label>
       {label}:{' '}
       <input
         type="text"
-        value={text}
+        value={value}
         placeholder={label}
-        onChange={e => setText(e.target.value)}
+        onChange={onChange}
       />
     </label>
   );

@@ -7,11 +7,12 @@ import { useState } from 'react';
 
 export default function App() {
   const [showHint, setShowHint] = useState(false);
+  const [text, setText] = useState('');
   if (showHint) {
     return (
       <div>
         <p><i>Hint: Your favorite city?</i></p>
-        <Form />
+        <Form text={text} setText={setText} />
         <button onClick={() => {
           setShowHint(false);
         }}>Hide hint</button>
@@ -20,7 +21,7 @@ export default function App() {
   }
   return (
     <div>
-      <Form />
+     <Form text={text} setText={setText} />
       <button onClick={() => {
         setShowHint(true);
       }}>Show hint</button>
@@ -28,8 +29,7 @@ export default function App() {
   );
 }
 
-function Form() {
-  const [text, setText] = useState('');
+function Form({ text, setText }: { text: string; setText: React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <textarea
       value={text}

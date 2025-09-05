@@ -13,8 +13,9 @@ import { initialState, messengerReducer } from './messengerReducer';
 
 export default function Messenger() {
   const [state, dispatch] = useReducer(messengerReducer, initialState);
-  const message = state.message;
-  const contact = contacts.find((c) => c.id === state.selectedId)!!;
+  const contact = contacts.find((c) => c.id === state.selectedId)!;
+  const message = state.messages[state.selectedId]; // Берем сообщение для текущего контакта
+  
   return (
     <div>
       <ContactList

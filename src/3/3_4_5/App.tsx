@@ -21,7 +21,7 @@ export default function ContactList() {
       <label>
         <input
           type="checkbox"
-          //value={reverse}
+          checked={reverse}
           onChange={e => {
             setReverse(e.target.checked)
           }}
@@ -29,8 +29,8 @@ export default function ContactList() {
         Show in reverse order
       </label>
       <ul>
-        {displayedContacts.map((contact, i) =>
-          <li key={i}>
+        {displayedContacts.map(contact =>
+          <li key={contact.id}>
             <Contact contact={contact} />
           </li>
         )}

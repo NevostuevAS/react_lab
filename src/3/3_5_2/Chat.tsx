@@ -11,6 +11,14 @@ export default function Chat(
         dispatch: (action: Action) => void
     }
 ) {
+  const handleSend = () => {
+    alert(`Sending to ${contact.email}: ${message}`);
+    dispatch({
+      type: 'edited_message',
+      message: ''
+    });
+  };
+
   return (
     <section className="chat">
       <textarea
@@ -24,7 +32,9 @@ export default function Chat(
         }}
       />
       <br />
-      <button>Send to {contact.email}</button>
+      <button onClick={handleSend}>
+        Send to {contact.email}
+      </button>
     </section>
   );
 }

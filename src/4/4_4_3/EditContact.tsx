@@ -1,17 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ContactType } from './App';
 
 export default function EditContact(
-    { savedContact, onSave }:
-    { savedContact: ContactType, onSave: (updatedData: ContactType) => void }
+  { savedContact, onSave }: { savedContact: ContactType, onSave: (updatedData: ContactType) => void }
 ) {
   const [name, setName] = useState(savedContact.name);
   const [email, setEmail] = useState(savedContact.email);
-
-  useEffect(() => {
-    setName(savedContact.name);
-    setEmail(savedContact.email);
-  }, [savedContact]);
 
   return (
     <section>
@@ -31,14 +25,7 @@ export default function EditContact(
           onChange={e => setEmail(e.target.value)}
         />
       </label>
-      <button onClick={() => {
-        const updatedData = {
-          id: savedContact.id,
-          name: name,
-          email: email
-        };
-        onSave(updatedData);
-      }}>
+      <button onClick={() => onSave({ id: savedContact.id, name, email })}>
         Save
       </button>
       <button onClick={() => {

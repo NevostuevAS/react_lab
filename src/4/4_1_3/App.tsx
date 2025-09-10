@@ -7,16 +7,20 @@
   Почему кнопки мешают друг другу? Найдите и устраните проблему.
 */
 
-let timeoutID: number | undefined;
+import { useRef } from 'react';
 
 function DebouncedButton({ onClick, children }: {
   onClick: () => void, children: React.ReactNode
 }) {
+  const timeoutID = useRef<number | null>(null);
   return (
     <button onClick={() => {
-      clearTimeout(timeoutID);
-      timeoutID = setTimeout(() => {
+     if (timeoutID.current !== null) {
+        clearTimeout(timeoutID.current);
+      }
+      timeoutID.current = window.setTimeout(() => {
         onClick();
+        timeoutID.current = null;
       }, 1000);
     }}>
       {children}

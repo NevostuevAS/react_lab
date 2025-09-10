@@ -4,14 +4,19 @@
 
   Обычно такое поведение - это то, что вы хотите видеть в приложении. Однако иногда могут возникнуть ситуации, когда вы хотите, чтобы асинхронный код считывал последнюю версию некоторого состояния. Можете ли вы придумать, как сделать так, чтобы оповещение показывало текущий текст ввода, а не тот, что был в момент нажатия?
 */
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Chat() {
   const [text, setText] = useState('');
+  const textRef = useRef(text);
+
+  useEffect(() => {
+    textRef.current = text;
+  }, [text]);
 
   function handleSend() {
     setTimeout(() => {
-      alert('Sending: ' + text);
+      alert('Sending: ' + textRef.current);  // берем актуальное значение из рефа
     }, 3000);
   }
 
@@ -21,10 +26,7 @@ export default function Chat() {
         value={text}
         onChange={e => setText(e.target.value)}
       />
-      <button
-        onClick={handleSend}>
-        Send
-      </button>
+      <button onClick={handleSend}>Send</button>
     </>
   );
 }

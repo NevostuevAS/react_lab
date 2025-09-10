@@ -14,12 +14,21 @@ export default function Page() {
   const [person, setPerson] = useState('Alice');
   const [bio, setBio] = useState<string | null> (null);
 
-  useEffect(() => {
-    setBio(null);
-    fetchBio(person).then(result => {
+useEffect(() => {
+  let cancelled = false; 
+
+  setBio(null);
+
+  fetchBio(person).then(result => {
+    if (!cancelled) {
       setBio(result);
-    });
-  }, [person]);
+    }
+  });
+
+  return () => {
+    cancelled = true;  
+  };
+}, [person]);
 
   return (
     <>

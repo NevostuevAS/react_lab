@@ -10,12 +10,21 @@
 */
 
 import { usePointerPosition } from './usePointerPosition.ts';
+import { useState, useEffect } from 'react';
 
-type Position = { x: number, y: number };
+type Position = { x: number; y: number };
 
-function useDelayedValue(value: Position, delay: number) {
-  // TODO: Implement this Hook
-  return value;
+function useDelayedValue<T>(value: T, delay: number): T {
+  const [delayedValue, setDelayedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDelayedValue(value);
+    }, delay);
+    return () => clearTimeout(timeoutId);
+  }, [value, delay]);
+
+  return delayedValue;
 }
 
 export default function Canvas() {
@@ -23,7 +32,8 @@ export default function Canvas() {
   const pos2 = useDelayedValue(pos1, 100);
   const pos3 = useDelayedValue(pos2, 200);
   const pos4 = useDelayedValue(pos3, 100);
-  const pos5 = useDelayedValue(pos3, 50);
+  const pos5 = useDelayedValue(pos4, 50);
+
   return (
     <>
       <Dot position={pos1} opacity={1} />
@@ -35,23 +45,22 @@ export default function Canvas() {
   );
 }
 
-function Dot(
-  { position, opacity }:
-    { position: Position, opacity: number }
-) {
+function Dot({ position, opacity }: { position: Position; opacity: number }) {
   return (
-    <div style={{
-      position: 'absolute',
-      backgroundColor: 'pink',
-      borderRadius: '50%',
-      opacity,
-      transform: `translate(${position.x}px, ${position.y}px)`,
-      pointerEvents: 'none',
-      left: -20,
-      top: -20,
-      width: 40,
-      height: 40,
-    }} />
+    <div
+      style={{
+        position: 'absolute',
+        backgroundColor: 'red',
+        borderRadius: '50%',
+        opacity,
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        pointerEvents: 'none',
+        width: 40,
+        height: 40,
+        left: -20,
+        top: -20,
+      }}
+    />
   );
 }
 

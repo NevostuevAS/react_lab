@@ -5,20 +5,23 @@
   Однако, сколько бы раз вы ни нажали на кнопку с плюсом, счетчик все равно увеличивается на единицу каждую секунду. Что не так с этим кодом? Почему increment всегда равен 1 в коде Effect'а? Найдите ошибку и исправьте ее.
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Timer() {
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
 
+  const incrementRef = useRef(increment);
+
+  useEffect(() => {
+    incrementRef.current = increment;
+  }, [increment]);
+
   useEffect(() => {
     const id = setInterval(() => {
-      setCount(c => c + increment);
+      setCount(c => c + incrementRef.current);
     }, 1000);
-    return () => {
-      clearInterval(id);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => clearInterval(id);
   }, []);
 
   return (

@@ -23,13 +23,27 @@ export default function Page() {
       if (!ignore) {
         console.log('Fetched a list of planets.');
         setPlanetList(result);
-        setPlanetId(result[0].id); // Select the first planet
+        setPlanetId(result[0].id);
       }
     });
     return () => {
       ignore = true;
     }
   }, []);
+
+  useEffect(() => {
+    if (!planetId) return;
+    let ignore = false;
+    fetchData('/planets/' + planetId + '/places').then(result => {
+      if (!ignore) {
+        setPlaceList(result);
+        setPlaceId(result.length > 0 ? result[0].id : '');
+      }
+    });
+    return () => {
+      ignore = true;
+    }
+  }, [planetId]);
 
   return (
     <>

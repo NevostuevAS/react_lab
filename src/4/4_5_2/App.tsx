@@ -13,7 +13,7 @@ export default function App() {
 
 	useEffect(() => {
 		function handleMove(e) {
-			if (canMove) {
+			if (canMove) { // проверка флага
 				setPosition({ x: e.clientX, y: e.clientY });
 			}
 		}
@@ -23,7 +23,7 @@ export default function App() {
 		return () => {
 			window.removeEventListener('pointermove', handleMove);
 		};
-	}, [canMove]); 
+	}, [canMove]); // зависимость — canMove
 
   return (
     <>

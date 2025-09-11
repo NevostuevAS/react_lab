@@ -5,14 +5,19 @@
   Однако по какой-то причине переменная состояния canMove внутри handleMove кажется "несвежей": она всегда true, даже после того, как вы установили флажок. Как такое возможно? Найдите ошибку в коде и исправьте ее.
 */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function App() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [canMove, setCanMove] = useState(true);
+  const canMoveRef = useRef(canMove);
+
+  useEffect(() => {
+    canMoveRef.current = canMove;
+  }, [canMove]);
 
   function handleMove(e) {
-    if (canMove) {
+    if (canMoveRef.current) {
       setPosition({ x: e.clientX, y: e.clientY });
     }
   }
@@ -20,31 +25,33 @@ export default function App() {
   useEffect(() => {
     window.addEventListener('pointermove', handleMove);
     return () => window.removeEventListener('pointermove', handleMove);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <label>
-        <input type="checkbox"
+        <input
+          type="checkbox"
           checked={canMove}
-          onChange={e => setCanMove(e.target.checked)} 
+          onChange={e => setCanMove(e.target.checked)}
         />
         The dot is allowed to move
       </label>
       <hr />
-      <div style={{
-        position: 'absolute',
-        backgroundColor: 'pink',
-        borderRadius: '50%',
-        opacity: 0.6,
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        pointerEvents: 'none',
-        left: -20,
-        top: -20,
-        width: 40,
-        height: 40,
-      }} />
+      <div
+        style={{
+          position: 'absolute',
+          backgroundColor: 'pink',
+          borderRadius: '50%',
+          opacity: 0.6,
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          pointerEvents: 'none',
+          left: -20,
+          top: -20,
+          width: 40,
+          height: 40,
+        }}
+      />
     </>
   );
 }

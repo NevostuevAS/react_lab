@@ -16,8 +16,10 @@ function ChatRoom({ roomId }: { roomId: string }) {
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
-    return () => connection.disconnect();
-  });
+    return () => {
+      connection.disconnect();
+    };
+  }, [roomId]); 
 
   return (
     <>
@@ -32,6 +34,7 @@ function ChatRoom({ roomId }: { roomId: string }) {
 
 export default function App() {
   const [roomId, setRoomId] = useState('general');
+
   return (
     <>
       <label>

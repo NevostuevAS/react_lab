@@ -4,11 +4,12 @@
 */
 
 import { useState } from 'react';
-import { useCounter } from './useCounter.ts';
+import { useCounter } from './useCounter';
 
 export default function Counter() {
   const [delay, setDelay] = useState(1000);
-  const count = useCounter();
+  const count = useCounter(delay);
+
   return (
     <>
       <label>
@@ -19,7 +20,7 @@ export default function Counter() {
           value={delay}
           min="10"
           max="2000"
-          onChange={e => setDelay(Number(e.target.value))}
+          onChange={(e) => setDelay(Number(e.target.value))}
         />
       </label>
       <hr />
